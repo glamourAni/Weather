@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
 body {
 	margin: 0;
 	display: flex;
@@ -6,10 +8,15 @@ body {
 	background-color: #5f00ba;
 	height: 100vh;
 }
+#container * {
+	font-family: "Poppins", serif;
+}
 
 #container {
+	font-family: "Poppins", serif;
+	box-sizing: border-box;
 	background-color: rgba(160, 210, 219, 0.352);
-	max-width: 500px;
+	max-width: 600px;
 	border: rgba(160, 210, 219, 0.1);
 	border-radius: 10px;
 	padding: 20px;
@@ -18,22 +25,25 @@ body {
 	/* box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); */
 }
 h2,
-button {
+button,
+#temp-div,
+#weather-info,
+#forecast-div {
 	color: #fff;
 }
 #city {
 	width: calc(100% - 16px);
 	padding: 8px;
 	box-sizing: border-box;
-	border-radius: 10px;
+	border-radius: 20px;
 	border: 1px solid white;
 	outline: none;
 	margin-top: 20px;
 	font-size: 18px;
 }
 button {
-	background-color: #5f00ba;
-	padding: 5px;
+	background-color: #9966cc;
+	padding: 8px;
 	border: none;
 	border-radius: 10px;
 	cursor: pointer;
@@ -42,11 +52,58 @@ button {
 	font-size: 15px;
 }
 button:hover {
-	background-color: #2b064f;
+	background-color: #8a496b;
 }
 #weather-icon {
 	display: none;
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	margin: 0 auto;
+}
+#temp-div {
+	font-size: 60px;
+}
+#celsius {
+	font-size: calc(100% - 25px);
+}
+#weather-info p {
+	margin: 0;
+	font-size: 16px;
+	text-transform: capitalize;
+}
+#weather-info > p > span {
+	font-size: 32px;
+}
+#forecast-div {
+	background-color: rgba(0, 0, 0, 0.096);
+	text-align: left;
+	/* padding: 5px; */
+	margin-top: 30px;
+	border-radius: 6px;
+	display: none;
+}
+#daily-item-div {
+	overflow-x: auto;
+	display: flex;
+	justify-content: space-between;
+	white-space: no-wrap;
+}
+.daily {
+	flex: 0 0 auto;
+	width: 80px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: 10px;
+}
+.daily img {
+	width: 40px;
+	height: 40px;
+}
+#error {
+	text-align: left;
+	font-size: 13px;
+	margin-left: 10px;
+	font-style: italic;
+	color: #740808;
 }
