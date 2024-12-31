@@ -6,7 +6,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	background-color: #5f00ba;
-	height: 100vh;
+	height: 100dvh;
 }
 #container * {
 	font-family: "Poppins", serif;
