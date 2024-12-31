@@ -9,7 +9,17 @@
 	<body>
 		<div id="container">
 			<h2>Weather App</h2>
-			<input type="text" name="" id="city" placeholder="Enter a city" />
+			<div id="input">
+				<input
+					type="text"
+					name=""
+					id="city"
+					placeholder="Enter a city"
+				/>
+				<button id="cancel" onclick="clearInputField()">
+					<img src="assets/svg_370964.svg" alt="" />
+				</button>
+			</div>
 			<div id="error"></div>
 
 			<button id="search">Search</button>

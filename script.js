@@ -1,6 +1,7 @@
 const inputField = document.getElementById("city")
 const searchBtn = document.getElementById("search")
 const forecastDiv = document.getElementById("forecast-div")
+const errorMsg = document.getElementById("error")
 
 const apiKey1 = "f6256b2f54327d5967846ab0e3b01a2d"
 // const apiKey2 = "fAvL9zaK1amGR3VWW1YDw39s8g9RXFlw"
@@ -13,6 +14,7 @@ async function getWeatherInfo() {
 	const city = inputField.value
 	if (!city) {
 		alert("Please enter a valid city name.")
+		weatherIcon.style.display = "none"
 	}
 
 	// get current weather data
@@ -21,11 +23,13 @@ async function getWeatherInfo() {
 		const weatherData = await response.json()
 
 		if (response.status == 404) {
-			document.getElementById("error").innerHTML =
+			errorMsg.innerHTML =
 				"City not found. Please enter a valid city name"
 			console.log(data.cod)
+		} else {
+			errorMsg.innerHTML = ""
+			displayWeatherInfo(weatherData)
 		}
-		displayWeatherInfo(weatherData)
 	} catch (error) {
 		console.log("Encountered error while fetching data - ", error)
 	}
@@ -68,14 +72,16 @@ function displayWeatherInfo(data) {
 	</p>`
 	const temp = document.querySelector("#desc")
 	if (weatherMessage.contains(temp)) {
-		temp.remove()
+		temp.remove() // prevents weather information from being added to the DOM multiple times when the search btn is clicked
 	}
 	weatherMessage.innerHTML = p
 }
 function displayFiveDayForecast(data) {
+	// update forecast information by clearing previously displayed data
+	document.querySelectorAll(".daily").forEach((day) => day.remove())
+
 	const dailyForecastDiv = document.getElementById("daily-item-div")
 	const today = new Date().getDay()
-
 	const fiveDayForecast = []
 	const isUnique = {}
 
@@ -92,7 +98,6 @@ function displayFiveDayForecast(data) {
 			if (fiveDayForecast.length != 5) fiveDayForecast.push(item)
 		}
 	})
-	console.log(fiveDayForecast)
 
 	fiveDayForecast.forEach((item) => {
 		const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -100,6 +105,7 @@ function displayFiveDayForecast(data) {
 		const month = dateTime.getMonth() + 1
 		const monthDay = dateTime.getDate()
 		const dayIndex = dateTime.getDay()
+
 		let weekday
 		if (dayIndex === today) {
 			weekday = "Today"
@@ -108,6 +114,7 @@ function displayFiveDayForecast(data) {
 		} else {
 			weekday = weekDays[dayIndex]
 		}
+
 		const temperature = Math.round(item.main.temp_max)
 		const iconValue = item.weather[0].icon
 		const iconUrl = `https://openweathermap.org/img/wn/${iconValue}@2x.png`
@@ -120,6 +127,7 @@ function displayFiveDayForecast(data) {
 								<span class="forecast-temp">${temperature}°</span>
 							</div>
 							`
+
 		dailyForecastDiv.insertAdjacentHTML("beforeend", dailyForecast)
 
 		// unhide forecast div
@@ -127,3 +135,9 @@ function displayFiveDayForecast(data) {
 	})
 }
 searchBtn.addEventListener("click", getWeatherInfo)
+
+//clear input field
+const clearInputField = () => {
+	inputField.value = ""
+	inputField.focus()
+}
